@@ -48,7 +48,7 @@ export default function TurnosActivos() {
 
 const styles = {
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#e7c09bcb",
     padding: 30,
     minHeight: "100vh",
     textAlign: "center",

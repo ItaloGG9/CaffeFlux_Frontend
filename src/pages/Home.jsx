@@ -14,7 +14,7 @@ export default function Home() {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        backgroundColor: "#f4f4f4",
+        backgroundColor: "#e7c09bcb",
         textAlign: "center",
       }}
     >

@@ -62,7 +62,7 @@ export default function AbrirTurno() {
 
 const styles = {
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#e7c09bcb",
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column",

@@ -54,7 +54,7 @@ export default function VerTurnos() {
 
 const styles = {
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#e7c09bcb",
     minHeight: "100vh",
     padding: "30px",
     textAlign: "center",
@@ -64,7 +64,7 @@ const styles = {
     maxWidth: "800px",
     margin: "20px auto",
     borderCollapse: "collapse",
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffffff",
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
   },
   volver: {

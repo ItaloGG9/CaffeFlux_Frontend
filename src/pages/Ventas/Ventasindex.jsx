@@ -152,7 +152,7 @@ export default function Ventasindex() {
 
 const styles = {
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#e7c09bcb",
     padding: 20,
     minHeight: "100vh",
     textAlign: "center",
@@ -163,15 +163,15 @@ const styles = {
     marginTop: 20,
   },
   productosBox: {
-    width: "60%",
-    backgroundColor: "#fff",
+    width: "58%",
+    backgroundColor: "#dda168ff",
     padding: 15,
     borderRadius: 12,
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
   },
   carritoBox: {
     width: "35%",
-    backgroundColor: "#fff",
+    backgroundColor: "#dda168ff",
     borderRadius: 12,
     padding: 15,
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
@@ -183,7 +183,7 @@ const styles = {
     marginTop: 10,
   },
   productoButton: {
-    backgroundColor: "#96491d98",
+    backgroundColor: "#000000d0",
     color: "white",
     border: "none",
     borderRadius: 8,

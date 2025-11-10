@@ -70,7 +70,7 @@ export default function CerrarTurno() {
 
 const styles = {
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#e7c09bcb",
     padding: 30,
     minHeight: "100vh",
     textAlign: "center",
@@ -84,7 +84,7 @@ const styles = {
     marginTop: 20,
   },
   turnoCard: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#e7aa71cb",
     borderRadius: 12,
     boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
     padding: 20,

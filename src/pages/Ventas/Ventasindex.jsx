@@ -53,7 +53,7 @@ export default function Ventasindex() {
     }
 
     // 1. Crear el objeto de Venta/Pedido
-    const pagosData = {
+    const ventaData = {
       // Tu backend de FastAPI DEBE ser capaz de manejar esta estructura
       // y probablemente crear los registros en las tablas 'pedidos' y 'lineaspedido'
       fecha: new Date().toISOString(), // Usar formato ISO para el backend
@@ -69,7 +69,7 @@ export default function Ventasindex() {
 
     try {
       // 2. Enviar la venta al endpoint (Asumo que este endpoint maneja la lógica completa: Pedido y Pago)
-      const res = await axios.post(`${API_URL}/api/pagos`, pagosData);
+      const res = await axios.post(`${API_URL}/api/ventas`, ventaData);
       
       alert(res.data.message || `✅ Venta (${metodoPago}) registrada correctamente.`);
       
@@ -269,4 +269,4 @@ const styles = {
     fontWeight: "bold",
     marginTop: 10,
   },
-};
+}

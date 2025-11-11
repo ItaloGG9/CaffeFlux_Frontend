@@ -7,11 +7,11 @@ export default function Ventasindex() {
   const [productos, setProductos] = useState([]);
   const [carrito, setCarrito] = useState([]);
   const [total, setTotal] = useState(0);
-  const [metodoPago, setMetodoPago] = useState("Efectivo"); // 👈 NUEVO ESTADO
+  const [metodoPago, setMetodoPago] = useState("Efectivo");
   const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
 
-  // 🔹 Cargar productos desde backend PostgreSQL
+  //  Cargar productos desde backend PostgreSQL
   useEffect(() => {
     axios
       .get(`${API_URL}/api/productos`)
@@ -19,7 +19,7 @@ export default function Ventasindex() {
       .catch((err) => console.error("Error cargando productos:", err));
   }, [API_URL]);
 
-  // 🔹 Agregar producto al carrito
+  //  Agregar producto al carrito
   const agregarAlCarrito = (producto) => {
     const existe = carrito.find((p) => p.id_producto === producto.id_producto);
     if (existe) {
@@ -36,7 +36,7 @@ export default function Ventasindex() {
     setTotal((t) => t + producto.precio_venta);
   };
 
-  // 🔹 Eliminar producto del carrito
+  //  Eliminar producto del carrito
   const eliminarDelCarrito = (id_producto) => {
     const item = carrito.find((p) => p.id_producto === id_producto);
     if (item) {
@@ -45,7 +45,7 @@ export default function Ventasindex() {
     }
   };
 
- // 🔹 Confirmar venta (guardar en Backend)
+ //  Confirmar venta (guardar en Backend)
   const confirmarVenta = async () => {
     if (carrito.length === 0) {
       alert("🛒 No hay productos en el carrito.");
@@ -55,7 +55,7 @@ export default function Ventasindex() {
     // 1. Crear el objeto de Venta/Pedido
     // ATENCIÓN: Se asume que tu backend espera una estructura que incluye la info del pedido
     // y TAMBIÉN puede manejar la lista de productos (lineaspedido) en la misma llamada.
-    const ventaData = {
+    const pagosData = {
       // Campos del encabezado del Pedido/Pago:
       total: total, // El total calculado en React
       metodo_pago: metodoPago, // El método seleccionado por el usuario
@@ -80,7 +80,7 @@ export default function Ventasindex() {
       // 3. Enviar la venta al endpoint
       // **Cambiamos el endpoint a 'pagos'** si ese es el nombre correcto, aunque tu código usa 'ventas'.
       // Dejaremos 'ventas' por ahora, pero verifica el nombre real.
-      const res = await axios.post(`${API_URL}/api/ventas`, ventaData);
+      const res = await axios.post(`${API_URL}/api/pagos`, pagosData);
       
       alert(res.data.message || `✅ Venta (${metodoPago}) registrada correctamente.`);
       

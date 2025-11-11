@@ -45,44 +45,55 @@ export default function Ventasindex() {
     }
   };
 
-  // 🔹 Confirmar venta (guardar en Backend)
-  const confirmarVenta = async () => {
-    if (carrito.length === 0) {
-      alert("🛒 No hay productos en el carrito.");
-      return;
-    }
+ // 🔹 Confirmar venta (guardar en Backend)
+  const confirmarVenta = async () => {
+    if (carrito.length === 0) {
+      alert("🛒 No hay productos en el carrito.");
+      return;
+    }
 
-    // 1. Crear el objeto de Venta/Pedido
-    const ventaData = {
-      // Tu backend de FastAPI DEBE ser capaz de manejar esta estructura
-      // y probablemente crear los registros en las tablas 'pedidos' y 'lineaspedido'
-      fecha: new Date().toISOString(), // Usar formato ISO para el backend
-      total,
-      metodo_pago: metodoPago, // 👈 INCLUIMOS EL MÉTODO DE PAGO
-      productos: carrito.map((p) => ({
-        id_producto: p.id_producto,
-        nombre: p.nombre_producto,
-        cantidad: p.cantidad,
-        precio_unitario: p.precio_venta,
-      })),
-    };
+    // 1. Crear el objeto de Venta/Pedido
+    // ATENCIÓN: Se asume que tu backend espera una estructura que incluye la info del pedido
+    // y TAMBIÉN puede manejar la lista de productos (lineaspedido) en la misma llamada.
+    const ventaData = {
+      // Campos del encabezado del Pedido/Pago:
+      total: total, // El total calculado en React
+      metodo_pago: metodoPago, // El método seleccionado por el usuario
+      fecha_hora: new Date().toISOString(), // Usar formato ISO para el backend
+      // id_mesa, propina, descuento: Los estoy omitiendo. Si son obligatorios, agrégalos.
+      id_mesa: 1, // <--- CAMBIA ESTO: Asumo un valor por defecto. Si usas mesas, debes seleccionarla.
+      propina: 0, // <--- Puedes agregar un campo para esto
+      descuento: 0, // <--- Puedes agregar un campo para esto
 
-    try {
-      // 2. Enviar la venta al endpoint (Asumo que este endpoint maneja la lógica completa: Pedido y Pago)
-      const res = await axios.post(`${API_URL}/api/ventas`, ventaData);
-      
-      alert(res.data.message || `✅ Venta (${metodoPago}) registrada correctamente.`);
-      
-      // Limpiar estados
-      setCarrito([]);
-      setTotal(0);
-      setMetodoPago("Efectivo"); // Resetear a la opción predeterminada
-      
-    } catch (err) {
-      console.error("Error registrando venta:", err.response ? err.response.data : err.message);
-      alert("❌ No se pudo registrar la venta. Revisa la consola.");
-    }
-  };
+      // 2. Incluir los productos (Líneas de Pedido)
+      // Esto es clave: El backend DEBE estar preparado para recibir esta lista
+      // y crear las filas en la tabla 'lineaspedido' después de crear el pedido.
+      productos: carrito.map((p) => ({
+        id_producto: p.id_producto,
+        nombre: p.nombre_producto,
+        cantidad: p.cantidad,
+        precio_unitario: p.precio_venta,
+      })),
+    };
+
+    try {
+      // 3. Enviar la venta al endpoint
+      // **Cambiamos el endpoint a 'pagos'** si ese es el nombre correcto, aunque tu código usa 'ventas'.
+      // Dejaremos 'ventas' por ahora, pero verifica el nombre real.
+      const res = await axios.post(`${API_URL}/api/ventas`, ventaData);
+      
+      alert(res.data.message || `✅ Venta (${metodoPago}) registrada correctamente.`);
+      
+      // Limpiar estados
+      setCarrito([]);
+      setTotal(0);
+      setMetodoPago("Efectivo");
+      
+    } catch (err) {
+      console.error("Error registrando venta:", err.response ? err.response.data : err.message);
+      alert("❌ No se pudo registrar la venta. Revisa la consola.");
+    }
+  };
 
   return (
     <div style={styles.container}>

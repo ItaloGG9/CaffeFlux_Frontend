@@ -53,7 +53,7 @@ export default function Ventasindex() {
     }
 
     // 1. Crear el objeto de Venta/Pedido
-    const ventaData = {
+    const pagosData = {
       // Tu backend de FastAPI DEBE ser capaz de manejar esta estructura
       // y probablemente crear los registros en las tablas 'pedidos' y 'lineaspedido'
       fecha: new Date().toISOString(), // Usar formato ISO para el backend

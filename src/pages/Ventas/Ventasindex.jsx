@@ -69,7 +69,7 @@ export default function Ventasindex() {
 
     try {
       // 2. Enviar la venta al endpoint (Asumo que este endpoint maneja la lógica completa: Pedido y Pago)
-      const res = await axios.post(`${API_URL}/api/ventas`, ventaData);
+      const res = await axios.post(`${API_URL}/api/pagos`, pagosData);
       
       alert(res.data.message || `✅ Venta (${metodoPago}) registrada correctamente.`);
       

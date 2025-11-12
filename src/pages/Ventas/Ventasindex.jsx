@@ -45,46 +45,43 @@ export default function Ventasindex() {
     }
   };
 
- // 🔹 Confirmar venta (envía a backend /api/pagos)
+// 🔹 Confirmar venta (guardar en MongoDB)
 const confirmarVenta = async () => {
   if (carrito.length === 0) {
     alert("🛒 No hay productos en el carrito.");
     return;
   }
 
-  // Estructura completa esperada por el backend
-  const datosVenta = {
-    id_mesa: 1, // puedes agregar selector de mesa más adelante
-    propina: 0,
-    descuento: 0,
-    total: total,
+  // Armar el objeto que se guardará en MongoDB
+  const venta = {
     metodo_pago: metodoPago,
+    total: total,
     fecha_hora: new Date().toISOString(),
     productos: carrito.map((p) => ({
       id_producto: p.id_producto,
-      nombre: p.nombre_producto,
-      cantidad: p.cantidad,
-      precio_unitario: p.precio_venta,
+      nombre_producto: p.nombre_producto,
+      precio_venta: p.precio_venta,
+      precio_costo: p.precio_costo,
+      jerarquia: p.jerarquia,
+      estado_producto: p.estado_producto,
+      id_jerarquia: p.id_jerarquia,
     })),
   };
 
   try {
-    const res = await axios.post(`${API_URL}/api/pagos`, datosVenta);
-    console.log("✅ Venta registrada:", res.data);
+    const res = await axios.post(`${API_URL}/api/pagos`, venta);
+    console.log("✅ Venta guardada:", res.data);
 
-    setMensaje(res.data.message || "✅ Venta registrada correctamente");
-    setTimeout(() => setMensaje(""), 3000);
-
-    // Limpiar carrito
+    alert("✅ Venta registrada correctamente en MongoDB.");
     setCarrito([]);
     setTotal(0);
     setMetodoPago("Efectivo");
   } catch (err) {
-    console.error("❌ Error al registrar la venta:", err.response?.data || err.message);
-    setMensaje("❌ Error al registrar la venta");
-    setTimeout(() => setMensaje(""), 3000);
+    console.error("❌ Error al registrar la venta:", err);
+    alert("❌ No se pudo registrar la venta.");
   }
 };
+
 
   return (
     <div style={styles.container}>

@@ -45,37 +45,46 @@ export default function Ventasindex() {
     }
   };
 
-  // 🔹 Confirmar venta (envía a backend /api/pagos)
-  const confirmarVenta = async () => {
-    if (carrito.length === 0) {
-      alert("🛒 No hay productos en el carrito.");
-      return;
-    }
+ // 🔹 Confirmar venta (envía a backend /api/pagos)
+const confirmarVenta = async () => {
+  if (carrito.length === 0) {
+    alert("🛒 No hay productos en el carrito.");
+    return;
+  }
 
-    const datosVenta = {
-      id_pedido: 1, // Puedes asignar ID real si manejas pedidos
-      metodo_pago: metodoPago,
-      monto: total,
-    };
-
-    try {
-      const res = await axios.post(`${API_URL}/api/pagos`, datosVenta);
-      console.log("✅ Venta registrada:", res.data);
-
-      // ✅ Mostrar mensaje visual de éxito
-      setMensaje("✅ Venta registrada correctamente");
-      setTimeout(() => setMensaje(""), 3000);
-
-      // Reiniciar estado
-      setCarrito([]);
-      setTotal(0);
-      setMetodoPago("Efectivo");
-    } catch (err) {
-      console.error("❌ Error al registrar la venta:", err);
-      setMensaje("❌ Error al registrar la venta");
-      setTimeout(() => setMensaje(""), 3000);
-    }
+  // Estructura completa esperada por el backend
+  const datosVenta = {
+    id_mesa: 1, // puedes agregar selector de mesa más adelante
+    propina: 0,
+    descuento: 0,
+    total: total,
+    metodo_pago: metodoPago,
+    fecha_hora: new Date().toISOString(),
+    productos: carrito.map((p) => ({
+      id_producto: p.id_producto,
+      nombre: p.nombre_producto,
+      cantidad: p.cantidad,
+      precio_unitario: p.precio_venta,
+    })),
   };
+
+  try {
+    const res = await axios.post(`${API_URL}/api/pagos`, datosVenta);
+    console.log("✅ Venta registrada:", res.data);
+
+    setMensaje(res.data.message || "✅ Venta registrada correctamente");
+    setTimeout(() => setMensaje(""), 3000);
+
+    // Limpiar carrito
+    setCarrito([]);
+    setTotal(0);
+    setMetodoPago("Efectivo");
+  } catch (err) {
+    console.error("❌ Error al registrar la venta:", err.response?.data || err.message);
+    setMensaje("❌ Error al registrar la venta");
+    setTimeout(() => setMensaje(""), 3000);
+  }
+};
 
   return (
     <div style={styles.container}>

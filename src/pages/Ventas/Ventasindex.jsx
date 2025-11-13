@@ -67,7 +67,7 @@ const confirmarVenta = async () => {
   };
 
   try {
-    const res = await axios.post(`${API_URL}/api/pagos`, datosVenta);
+    const res = await axios.post(`${API_URL}/api/pagos/`, datosVenta);
     console.log("✅ Venta registrada:", res.data);
 
     setMensaje("✅ Venta registrada correctamente en MongoDB");

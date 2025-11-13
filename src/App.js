@@ -12,6 +12,24 @@ import VentasTotales from "./pages/admin/VentasTotales";
 import TurnosActivos from "./pages/admin/TurnosActivos";
 import CerrarDia from "./pages/admin/CerrarDia";
 
+export default function App() {
+  return (
+    <Routes>
+      {/* Tu home u otras rutas */}
+      <Route path="/" element={<Navigate to="/pagos" replace />} />
+
+      {/* 👉 Aquí registras la pantalla de ventas en /pagos */}
+      <Route path="/pagos" element={<Ventasindex />} />
+
+      {/* (Opcional) Mantener compatibilidad con /ventas */}
+      <Route path="/ventas" element={<Ventasindex />} />
+
+      {/* 404 (opcional) */}
+      <Route path="*" element={<div>404</div>} />
+    </Routes>
+  );
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <App />
